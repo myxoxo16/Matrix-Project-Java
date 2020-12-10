@@ -1,0 +1,315 @@
+package Array;
+import java.util.Scanner;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+public class MatrixProject {
+
+	/**
+	 * create a two dimensional array that asks the user to input the number of rows and columns.
+	 * pre: none
+	 * post: random arrays will be displayed on console and output file
+	 */	
+
+	public static void generateMatrix()
+	{
+		//Declare variables
+		int userRows;
+		int userColumns;
+		Scanner input = new Scanner (System.in);
+
+		//Prompt user to enter number of rows from 0-9
+		System.out.println("Enter the number of rows (from 0-9):  ");
+		userRows = input.nextInt();
+
+		//Prompt user to enter number of columns from 0-9
+		System.out.println("Enter the number of columns (from 0-9):  ");
+		userColumns = input.nextInt();
+
+		//create output file
+		File outFile = new File("randomMatrix.txt");
+		FileWriter out;
+		BufferedWriter writeFile;
+
+		//Add a new line to start a new row 
+		System.out.println();
+
+		try
+		{	
+			//Open file for writing
+			out = new FileWriter(outFile);
+			writeFile = new BufferedWriter(out);
+
+			int [][] matrix = new int [userRows][userColumns];
+			for(int r = 0; r < userRows; r++)
+			{
+				//As long as row and column are less than the length of the array, keep adding
+				//random values into array
+				for (int c = 0; c < userColumns;c++)
+				{
+					//Get random number between 0-9
+					//and put it in the array
+					matrix [r][c] = ((int)(Math.random()* 10));
+					String element = String.valueOf(matrix [r][c]);
+
+					//print array
+					System.out.print(matrix[r][c] + " ");
+					writeFile.write(element + " ");
+				}
+				System.out.println();
+				writeFile.write("\n");
+			}
+			//Close output file
+			writeFile.close();
+			out.close();
+
+		}
+		catch (IOException e) 
+		{
+			System.out.println("Problem reading file.");
+			System.err.println("IOException: " + e.getMessage());
+		}
+	}
+
+	/*
+	 *
+	 * Description: This program will create a random array and then transpose it and output to a file.
+	 */
+
+	/**generateTranspose method
+	 * creates a random 2d array that is 5x5, then transposes it and outputs to a file
+	 * pre: nothing
+	 * post: the array into another file
+	 */	
+
+	public static void generateTranspose() throws IOException 
+	{
+		//prepares the output file
+		File outFile = new File("part4MatriciesOutput.txt");
+		FileWriter out;
+		BufferedWriter writeFile;
+
+		out = new FileWriter(outFile);
+		writeFile = new BufferedWriter(out);
+
+		try
+		{
+			//declare variables
+			int a = 5;
+			int b = 5;
+			int c = 0;
+			int d = 0;
+
+			//creating a random matrix that is 5x5 represented by variable a and b 
+			int array2[][] = new int[a][b];
+
+			System.out.println("Original Matrix:");  
+			for (c = 0; c < a; c++) 
+			{
+				for (d = 0; d < b; d++)
+				{
+					array2[c][d] = (int) ((9 + 1) * Math.random());
+					System.out.print(array2[c][d]+" ");
+				}
+				System.out.println(" ");
+			}
+
+			//creating another matrix to store the transposed matrix temporarily 
+			int transpose[][]=new int[a][b];  //3 rows and 3 columns  
+
+			//transpose the matrix 
+			for(int e = 0; e < a; e++)
+			{    
+				for(int f = 0; f < b; f++)
+				{    
+					transpose[e][f]=array2[f][e];  
+				}    
+			}    
+
+			//line for format
+			System.out.println(" ");
+
+			//output transposed array to the screen
+			System.out.println("Transposed Matrix:");  
+			for(int e = 0; e < a; e++)
+			{    
+				for(int f = 0; f < b; f++)
+				{    
+					//write the transposed array to the screen
+					System.out.print(transpose[e][f]+" ");
+
+					//write the transposed array to the file
+					writeFile.write(transpose[e][f]+" ");	
+				}   
+				System.out.println(" ");
+				//use line spacing to format the file properly
+				writeFile.newLine();
+			}  
+
+			//close the file
+			writeFile.close();
+			out.close();
+
+			//confirmation that the transposed array is on the file
+			System.out.println(" ");
+			System.out.println("Data written to file.");
+		}
+
+		//catch the errors if there are any, so things don't crash
+		catch (IOException z)
+		{
+			System.out.println("Problem writing to file.");
+			System.err.println("IOException: " + z.getMessage());
+		}
+
+	} 
+
+	//reminder we have no part three because of some confusion of who's doing what
+
+	/**multiplyMatrix method
+	 * uses user (rows and columns) input to create 2 random arrays and then multiplies the two arrays
+	 * pre: none
+	 * post: the result of two arrays that are multiplied together 
+	 */	
+
+	public static void multiplyMatrix()
+	{
+		//declaring almost all variables
+		int a = 0;
+		int b = 0;
+		int c = 0;
+		int d = 0;
+		int e; 
+		int f; 
+		int g;
+		int sum = 0;
+
+		//asking user for how many rows and columns they want to see in array 1
+		Scanner in = new Scanner(System.in);
+		System.out.println("How many rows and columns would you like in your 1st matrix from 1-9? (Separated by a space): ");
+		a = in.nextInt();
+		b = in.nextInt();
+
+		//asking user for how many columns they want to see in array 2
+		System.out.println("How many columns would you like in your 2nd matrix from 1-9?: ");
+		//row 2 will always be equal to column 1
+		c = b;
+		d = in.nextInt();
+
+		//using math.random to make the first array according to the users specifications
+		int array1[][] = new int[a][b];
+
+		System.out.println(" ");
+		System.out.println("The first matrix:");
+		for (e = 0; e < a; e++)
+		{
+			for (f = 0; f < b; f++)
+			{
+				array1[e][f] = (int) ((9 + 1)* Math.random());
+				System.out.print(array1[e][f] + " ");
+			}
+			System.out.println(" ");
+		}
+
+		//space to separate the two matrices
+		System.out.println(" ");
+
+		//making sure the array is multiplied by looking at the number of rows for the second array (has to be more than the first arrays rows)
+		if (b != c) 
+		{
+			System.out.println("The matrices cannot be multiplied");
+		}
+		//if the numbers are multiplied then create the second array using math.random based on the users specifications
+		else
+		{
+			System.out.println("The second matrix:");
+			int array2[][] = new int[c][d];
+			int multiplication[][] = new int[a][d];
+
+			for (e = 0; e < c; e++) 
+			{
+				for (f = 0; f < d; f++)
+				{
+					array2[e][f] = (int) ((9+ 1) * Math.random());
+					System.out.print(array2[e][f] + " ");
+				}
+				System.out.println(" ");
+			}
+
+			//use this loop to multiply the two arrays which are represented by variables
+			for (e = 0; e < a; e++) 
+			{
+				for (f = 0; f < d; f++) 
+				{
+					for (g = 0; g < c; g++)
+					{
+						sum = sum + array1[e][g] * array2[g][f];
+
+						multiplication[e][f] = sum;
+						sum = 0;
+					}
+				}
+			}
+
+			System.out.println(" ");
+
+			//use this loop to display the results of the two multiplied arrays and format
+			System.out.println("The product of the matrices are: ");
+			for (e = 0; e < a; e++) 
+			{
+				for (f = 0; f < d; f++)
+				{
+					System.out.print(multiplication[e][f] + " ");
+				}
+				System.out.println(" ");
+			}
+			in.close();
+		}
+	}
+
+
+	/**main method 
+	 * the menu where the user chooses what part they would like to run
+	 * pre: none
+	 * post: runs the method the user chooses
+	 * @throws IOException 
+	 */	
+
+	public static void main(String[] args) throws IOException 
+	{
+		// TODO Auto-generated method stub
+
+		//Declare the userAnswer
+		int userAnswer;
+
+		//Input scanner
+		Scanner input = new Scanner (System.in);
+
+		//Introduce matrix program to user and allow user to select options from the menu
+		System.out.println("  Welcome to the matrix program! ");
+		System.out.println("Please select one of the following options:  ");
+		System.out.println("1: The Random Matrix ");
+		System.out.println("2: The Transpose Matrix");
+		System.out.println("4: Multiplying Two Matrices");
+
+		userAnswer = input.nextInt();
+
+		//If the user chooses 1 then run it)
+		if (userAnswer == 1) 
+		{
+			generateMatrix();
+		}
+		//If the user chooses 2, then run it]
+		else if (userAnswer == 2)
+		{
+			generateTranspose();
+		}
+		//If the user chooses 4, then run it
+		else if (userAnswer == 4)
+		{
+			multiplyMatrix();
+		}
+		input.close();
+	}
+}
